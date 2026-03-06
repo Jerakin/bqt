@@ -118,7 +118,10 @@ class BlenderApplication(QApplication):
             bqt.manager._blender_window_change(self._active_window_hwnd)
 
         if os.getenv("BQT_AUTO_ADD", "1") == "1":
-            bqt.manager.parent_orphan_widgets(exclude=[self.blender_widget, self._blender_window, self.window_container])  # auto parent any orphaned widgets
+            # auto parent any orphaned widgets
+            bqt.manager.parent_orphan_widgets(
+                exclude = [x for x in [self.blender_widget, self._blender_window, self.window_container] if x],
+            )
 
     def blender_focus_toggled(self) -> bool:
         """returns true the first frame the blender window is focussed or unfoccused"""
